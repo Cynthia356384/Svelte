@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    container_name: tareas-svelte
+    ports:
+      - "3000:3000"
+    environment:
+      # Necesario para que funcionen los formularios (protección CSRF de SvelteKit)
+      ORIGIN: http://localhost:3000
+      APP_ENV: docker
+    volumes:
+      # Las tareas se guardan en un volumen y sobreviven si borramos el contenedor
+      - datos-tareas:/app/data
+    restart: unless-stopped
+
+volumes:
+  datos-tareas:
